@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THM Translator — simulator</title>
+<style>
+  :root { --bg: #eef1f6; --card: #ffffff; --line: #d9dfea; --text: #1f2a3d; --muted: #5d6b82; --accent: #2f6fde; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, "Segoe UI", system-ui, sans-serif; }
+  .sim { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center;
+    padding: 10px 20px; background: #1b2333; color: #e8edf5; font-size: 14px; }
+  .sim b { color: #fff; }
+  .sim .note { color: #9fb0c8; flex: 1 1 320px; }
+  .sim select, .sim button { font: inherit; padding: 5px 10px; border-radius: 8px; border: 1px solid #3a4862; background: #263048; color: #e8edf5; cursor: pointer; }
+  .sim button:hover, .sim select:hover { border-color: #5f7397; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 20px 120px; }
+  .room-head { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; margin-bottom: 18px; }
+  .room-head .tag { display: inline-block; font-size: 12px; font-weight: 600; color: var(--accent); background: #e7efff; border-radius: 20px; padding: 2px 10px; }
+  h1 { font-size: 28px; margin: 8px 0 4px; }
+  .room-head p { margin: 0; color: var(--muted); }
+  .task { background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
+  .task > button { all: unset; display: flex; gap: 12px; align-items: center; width: 100%; padding: 16px 24px; box-sizing: border-box; cursor: pointer; font-weight: 700; font-size: 17px; }
+  .task > button .n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #e7efff; color: var(--accent); font-size: 14px; flex: none; }
+  .task .body { padding: 0 24px 22px; border-top: 1px solid var(--line); }
+  .task .body p { margin: 14px 0; }
+  .task pre { background: #1b2333; color: #d7f5c5; padding: 12px 16px; border-radius: 10px; overflow-x: auto; font-size: 14px; }
+  .task code { background: #eef1f6; border-radius: 5px; padding: 1px 5px; font-size: 14px; }
+  .task img { max-width: 100%; height: auto; display: block; margin: 8px 0; }
+  .q { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: #f8f9fc; }
+  .q p { margin: 0 0 8px !important; font-weight: 600; }
+  .q input { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+  @media (max-width: 600px) { h1 { font-size: 23px; } .task > button { padding: 14px 16px; } .task .body { padding: 0 16px 18px; } }
+</style>
+<link rel="stylesheet" href="../content.css">
+</head>
+<body>
+<div class="sim">
+  <b>THM Translator · simulator</b>
+  <label>Language <select id="simLang"></select></label>
+  <button id="simExplain" type="button">Explain “port scan”</button>
+  <button id="simChat" type="button">Ask the mentor</button>
+  <button id="simDict" type="button">Room glossary</button>
+  <span class="note">The real extension script runs on this demo lesson. Model answers are pre-recorded here; the real extension gets them from your local model.</span>
+</div>
+
+<div class="wrap">
+  <div class="room-head">
+    <span class="tag">Demo lesson · not affiliated with TryHackMe</span>
+    <h1 class="StyledTitleText-demo">Ports and Services</h1>
+    <p class="StyledSubtitle-demo">Learn what network ports are and how attackers find open services.</p>
+  </div>
+
+  <section class="task">
+    <button id="header-1" type="button"><span class="n">1</span><span class="StyledTaskTitle-demo">What is a port?</span></button>
+    <div id="content-1" role="region" class="body">
+      <div class="StyledAccordionDetailsMain-demo">
+        <p>A <b>port</b> is a number that tells the operating system which program should receive incoming network traffic.</p>
+        <p>Each service listens on its own port: web servers usually use port <code>80</code> for HTTP and <code>443</code> for HTTPS, while SSH listens on port <code>22</code>.</p>
+        <p><img src="diagram.svg" width="640" height="260" alt="A client sends traffic through a firewall to services on different ports"></p>
+        <p>Attackers often start with a <b>port scan</b> to find out which services are exposed. A popular tool for this is Nmap:</p>
+        <pre>nmap -sV -p 1-1000 10.10.10.10</pre>
+        <p>The <code>-sV</code> flag asks Nmap to detect the version of each service, which helps you look for known vulnerabilities.</p>
+      </div>
+      <div class="q">
+        <p id="question-text-1">Which port does SSH use by default?</p>
+        <input placeholder="Answer format: **">
+      </div>
+    </div>
+  </section>
+
+  <section class="task">
+    <button id="header-2" type="button"><span class="n">2</span><span class="StyledTaskTitle-demo">Scanning safely</span></button>
+  </section>
+</div>
+
+<script src="simulator.js"></script>
+<script src="../languages.js"></script>
+<script src="../content.js"></script>
+</body>
+</html>

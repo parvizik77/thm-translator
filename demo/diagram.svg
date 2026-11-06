@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="260" viewBox="0 0 640 260" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <rect width="640" height="260" rx="14" fill="#f4f6fa"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5b6b86"/></marker>
+  </defs>
+  <!-- client -->
+  <rect x="28" y="92" width="120" height="70" rx="10" fill="#fff" stroke="#c9d2e0"/>
+  <text x="88" y="133" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2a3d">Client</text>
+  <!-- firewall -->
+  <rect x="214" y="56" width="34" height="142" rx="6" fill="#ffe9d6" stroke="#f0a35e"/>
+  <text x="231" y="222" text-anchor="middle" font-size="14" font-weight="600" fill="#a65a14">Firewall</text>
+  <line x1="150" y1="127" x2="208" y2="127" stroke="#5b6b86" stroke-width="2" marker-end="url(#a)"/>
+  <!-- server -->
+  <rect x="320" y="24" width="292" height="210" rx="12" fill="#fff" stroke="#c9d2e0"/>
+  <rect x="340" y="44" width="252" height="48" rx="8" fill="#e6f6ea" stroke="#6cc287"/>
+  <text x="358" y="74" font-size="15" font-weight="600" fill="#1f5b33">Web server :443</text>
+  <rect x="340" y="104" width="252" height="48" rx="8" fill="#e6f6ea" stroke="#6cc287"/>
+  <text x="358" y="134" font-size="15" font-weight="600" fill="#1f5b33">SSH server :22</text>
+  <rect x="340" y="164" width="252" height="48" rx="8" fill="#f8e8e8" stroke="#d98080" stroke-dasharray="5 4"/>
+  <text x="358" y="194" font-size="15" font-weight="600" fill="#8a2f2f">Database :3306</text>
+  <line x1="250" y1="100" x2="334" y2="68" stroke="#5b6b86" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="250" y1="127" x2="334" y2="128" stroke="#5b6b86" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="250" y1="154" x2="300" y2="174" stroke="#d98080" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="270" y="200" font-size="18" fill="#c0392b">✕</text>
+  <!-- legend -->
+  <rect x="28" y="24" width="12" height="12" rx="3" fill="#e6f6ea" stroke="#6cc287"/>
+  <text x="46" y="35" font-size="13" fill="#3a475e">Open port</text>
+  <rect x="28" y="46" width="12" height="12" rx="3" fill="#f8e8e8" stroke="#d98080"/>
+  <text x="46" y="57" font-size="13" fill="#3a475e">Closed port</text>
+</svg>
