@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "THM Translator",
+  "version": "2.1.0",
+  "description": "Translates TryHackMe rooms into 45 languages with a local AI model on your computer: lessons, hints, images, term explanations, mentor chat.",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "unlimitedStorage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://tryhackme.com/*",
+    "https://*.tryhackme.com/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://tryhackme.com/*"
+      ],
+      "js": [
+        "languages.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html",
+  "action": {
+    "default_title": "THM Translator — настройки"
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

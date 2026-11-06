@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THM Translator — настройки</title>
+<style>
+  :root { color-scheme: dark; --bg:#121826; --card:#1c2538; --card2:#222d44; --line:#2e3c58; --text:#e6edf3; --muted:#93a1b8;
+    --accent:#a3ea2a; --ink:#10190a; --danger:#ff7a7a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, "Ubuntu", sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 16px 60px; }
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  header img { width: 44px; height: 44px; border-radius: 10px; }
+  h1 { font-size: 22px; margin: 0; }
+  .sub { color: var(--muted); margin: 2px 0 0; }
+  nav { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 20px; overflow-x: auto; overflow-y: hidden; }
+  nav button { background: none; border: 0; color: var(--muted); font: inherit; font-weight: 600; padding: 10px 14px; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+  nav button.on { color: var(--text); border-bottom-color: var(--accent); }
+  section { display: none; }
+  section.on { display: block; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
+  .card h2 { font-size: 15px; margin: 0 0 4px; }
+  .card > p.hint { margin: 0 0 12px; }
+  .hint { color: var(--muted); font-size: 12.5px; }
+  .prov { display: grid; gap: 8px; }
+  .prov label { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; background: var(--bg); }
+  .prov label:has(input:checked) { border-color: var(--accent); background: rgba(163,234,42,.06); }
+  .prov input { margin-top: 3px; accent-color: var(--accent); }
+  .prov b { display: block; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; color: var(--ink); background: var(--accent); border-radius: 20px; padding: 0 7px; margin-left: 6px; vertical-align: 1px; }
+  .grp { display: none; margin-top: 14px; }
+  .grp.show { display: block; }
+  .field { margin-top: 10px; }
+  .field label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; }
+  input[type=text], input[type=password], select { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--bg); color: inherit; font: inherit; outline: none; }
+  input:focus, select:focus { border-color: #4a5d82; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .sw { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid rgba(46,60,88,.6); cursor: pointer; }
+  .sw:last-child { border-bottom: 0; }
+  .sw input { appearance: none; width: 36px; height: 20px; border-radius: 20px; background: #3a4762; position: relative; flex: none; margin-top: 2px; cursor: pointer; transition: .15s; }
+  .sw input::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #dfe6ef; transition: .15s; }
+  .sw input:checked { background: var(--accent); }
+  .sw input:checked::after { left: 18px; background: var(--ink); }
+  .sw b { display: block; font-weight: 600; }
+  button.b { font: inherit; padding: 8px 14px; border-radius: 9px; border: 1px solid var(--line); background: var(--card2); color: inherit; cursor: pointer; }
+  button.b:hover { border-color: #46587c; }
+  button.b.primary { background: var(--accent); color: var(--ink); border-color: var(--accent); font-weight: 700; }
+  button.b.danger { color: var(--danger); }
+  .msg { margin-top: 10px; min-height: 1.4em; white-space: pre-wrap; }
+  .ok { color: var(--accent); } .bad { color: var(--danger); }
+  code, kbd { background: var(--bg); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-size: 12.5px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 10px 0 14px; }
+  .stat { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+  .stat .n { font-size: 20px; font-weight: 700; }
+  .stat .l { color: var(--muted); font-size: 12px; }
+  .words { margin-top: 10px; }
+  .w { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 2px; border-bottom: 1px solid rgba(46,60,88,.6); }
+  .w .en { font-weight: 700; }
+  .w .ru { color: var(--accent); }
+  .w .note { color: var(--muted); font-size: 12.5px; grid-column: 1 / 2; }
+  .w button { grid-row: 1 / span 3; grid-column: 2; align-self: center; background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 18px; }
+  .w button:hover { color: var(--danger); }
+  table.keys { width: 100%; border-collapse: collapse; }
+  table.keys td { padding: 7px 4px; border-bottom: 1px solid rgba(46,60,88,.6); vertical-align: top; }
+  table.keys td:first-child { width: 1%; white-space: nowrap; padding-right: 18px; }
+  .savebar { position: sticky; bottom: 0; padding: 12px 0; background: linear-gradient(transparent, var(--bg) 30%); display: flex; gap: 8px; align-items: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon128.png" alt="">
+    <div><h1>THM Translator</h1><p class="sub">Комнаты TryHackMe на вашем языке с помощью локальной модели: текст, подсказки и картинки готовятся заранее.</p></div>
+  </header>
+
+  <nav>
+    <button data-tab="model" class="on">Язык и модель</button>
+    <button data-tab="behavior">Поведение</button>
+    <button data-tab="words">Мои слова</button>
+    <button data-tab="data">Данные</button>
+    <button data-tab="help">Справка</button>
+  </nav>
+
+  <section id="model" class="on">
+    <div class="card">
+      <h2>Язык перевода</h2>
+      <p class="hint">На этот язык переводятся уроки, подсказки, картинки и ответы наставника. Переводы для каждого языка хранятся отдельно.</p>
+      <select id="targetLang"></select>
+    </div>
+
+    <div class="card">
+      <h2>Локальная модель <span class="tag">только на вашем компьютере</span></h2>
+      <p class="hint">Расширение обращается только к серверу на <code>localhost</code> / <code>127.0.0.1</code> — тексты комнат никуда в интернет не уходят. Подойдёт любой OpenAI-совместимый сервер.</p>
+      <div class="field">
+        <label for="localUrl">Адрес сервера</label>
+        <input type="text" id="localUrl" spellcheck="false">
+        <div class="row" style="margin-top:8px">
+          <button class="b preset" type="button" data-url="http://127.0.0.1:8080/v1">llama.cpp :8080</button>
+          <button class="b preset" type="button" data-url="http://127.0.0.1:11434/v1">Ollama :11434</button>
+          <button class="b preset" type="button" data-url="http://127.0.0.1:1234/v1">LM Studio :1234</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="localModel">Модель <span class="hint">(пусто — первая модель на сервере)</span></label>
+        <div class="row"><input type="text" id="localModel" list="modelList" spellcheck="false" style="flex:1;width:auto">
+          <button class="b" id="loadModels" type="button">Найти модели</button></div>
+        <datalist id="modelList"></datalist>
+        <p class="hint">Для перевода надписей на картинках нужна модель с поддержкой изображений (vision). Переводы сохраняются: повторное открытие комнаты модель не нагружает. При смене модели комнаты переведутся заново.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="behavior">
+    <div class="card">
+      <h2>Перевод</h2>
+      <label class="sw"><input type="checkbox" id="prefetch"><span><b>Готовить перевод заранее</b>
+        <span class="hint">При открытии комнаты все задачи, вопросы и подсказки переводятся в фоне — при раскрытии задачи перевод уже готов.</span></span></label>
+      <label class="sw"><input type="checkbox" id="prefetchImages"><span><b>Читать картинки заранее</b>
+        <span class="hint">После текста в фоне переводятся надписи на скриншотах и схемах. Около 10 с на картинку.</span></span></label>
+      <div class="sw" style="cursor:default"><span style="flex:1"><b>Готовить следующие комнаты пути</b>
+        <span class="hint">Пока вы проходите комнату, в фоне переводится следующая по вашему учебному пути (только текст).</span></span>
+        <select id="prefetchNext" style="width:auto"><option value="0">нет</option><option value="1">1 комнату</option><option value="2">2 комнаты</option><option value="3">3 комнаты</option></select></div>
+      <label class="sw"><input type="checkbox" id="translateChat"><span><b>Переводить помощника Echo</b>
+        <span class="hint">Подсказки к вопросам и ответы встроенного ИИ-помощника TryHackMe. Подсказки готовятся заранее.</span></span></label>
+    </div>
+    <div class="card">
+      <h2>Режим по умолчанию</h2>
+      <p class="hint">Расширение запоминает последний выбранный режим. Переключать — на панели в комнате или <kbd>Alt+R</kbd>.</p>
+      <select id="mode">
+        <option value="en">EN — оригинал</option>
+        <option value="ru">Перевод</option>
+        <option value="bi">Перевод и оригинал под ним</option>
+      </select>
+    </div>
+  </section>
+
+  <section id="words">
+    <div class="card">
+      <h2>Мои слова</h2>
+      <p class="hint">Слова, сохранённые звёздочкой из окна перевода или словаря комнаты.</p>
+      <div class="row"><input type="text" id="wq" placeholder="Поиск"><button class="b" id="export" type="button">Экспорт в CSV</button></div>
+      <div class="words" id="wlist"></div>
+    </div>
+  </section>
+
+  <section id="data">
+    <div class="card">
+      <h2>Резервная копия</h2>
+      <p class="hint">Переводы, словари комнат, мои слова и история чатов в одном файле — чтобы не переводить заново после переустановки. Настройки в файл не попадают.</p>
+      <div class="row"><button class="b" id="backup" type="button">Скачать копию</button>
+        <label class="b" style="display:inline-block">Восстановить из файла<input type="file" id="restore" accept=".json,application/json" hidden></label></div>
+      <div class="msg" id="bmsg"></div>
+    </div>
+    <div class="card">
+      <h2>Сохранённые переводы</h2>
+      <div class="stats" id="stats"></div>
+      <div class="row"><button class="b danger" id="clear" type="button">Очистить переводы и словари комнат</button></div>
+      <p class="hint">«Мои слова» при очистке не удаляются.</p>
+      <div class="msg" id="dmsg"></div>
+    </div>
+  </section>
+
+  <section id="help">
+    <div class="card">
+      <h2>Как пользоваться</h2>
+      <table class="keys">
+        <tr><td><b>Панель</b></td><td>Внизу справа в комнате: оригинал / перевод / перевод + оригинал, ход подготовки, словарь, меню. Перетаскивается за ручку слева, сворачивается в кружок.</td></tr>
+        <tr><td><b>Выделение</b></td><td>Выделите слово, фразу или команду → кнопка с кодом языка: перевод в контексте, пояснение, «Подробнее», озвучка, сохранение в «Мои слова».</td></tr>
+        <tr><td><b>Абзац</b></td><td>Наведите на переведённый абзац: показать оригинал, перевести заново, подробно объяснить.</td></tr>
+        <tr><td><b>Картинка</b></td><td>Наведите на картинку или правая кнопка → «Перевести текст на картинке».</td></tr>
+        <tr><td><kbd>Alt+R</kbd></td><td>Перевод ↔ оригинал</td></tr>
+        <tr><td><kbd>Alt+B</kbd></td><td>Перевод и оригинал под ним</td></tr>
+        <tr><td>Удерживать <kbd>Alt</kbd></td><td>Подсмотреть оригинал</td></tr>
+        <tr><td><kbd>Alt+T</kbd></td><td>Перевести выделенное</td></tr>
+        <tr><td><kbd>Alt+D</kbd></td><td>Словарь комнаты и мои слова</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2>Проверка</h2>
+      <div class="row"><button class="b" id="test" type="button">Проверить подключение к модели</button></div>
+      <div class="msg" id="tmsg"></div>
+    </div>
+  </section>
+
+  <div class="savebar"><button class="b primary" id="save" type="button">Сохранить</button><span class="msg" id="smsg"></span></div>
+</div>
+<script src="languages.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

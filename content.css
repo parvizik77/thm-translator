@@ -1,0 +1,137 @@
+/* THM Переводчик — стили для элементов внутри страницы (вне Shadow DOM). */
+
+/* Оригинал скрыт, пока показан перевод. */
+[data-thmru-hide] {
+  display: none !important;
+}
+
+/* Режим RU+EN: оригинал под переводом — приглушённый, с полоской слева. */
+[data-thmru-muted] {
+  opacity: 0.6;
+  font-size: 0.93em !important;
+  border-left: 2px solid rgba(163, 234, 42, 0.45) !important;
+  padding-left: 10px !important;
+}
+
+.thmru-tr[hidden],
+.thmru-img-card[hidden] {
+  display: none !important;
+}
+
+/* Удержание Alt — подсмотреть оригинал. */
+html.thmru-peek [data-thmru-hide] {
+  display: revert !important;
+}
+html.thmru-peek [data-thmru-muted] {
+  opacity: 1;
+  font-size: inherit !important;
+  border-left: 0 !important;
+  padding-left: 0 !important;
+}
+html.thmru-peek .thmru-tr,
+html.thmru-peek .thmru-img-card {
+  display: none !important;
+}
+
+/* Подсветка блока под курсором, когда над ним панель инструментов. */
+.thmru-tr.thmru-hover {
+  outline: 1px dashed rgba(163, 234, 42, 0.35);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Карточка перевода картинки. */
+.thmru-img-card {
+  margin: 10px 0 18px;
+  padding: 12px 14px;
+  background: #1a2235;
+  border: 1px solid #2c3a54;
+  border-left: 3px solid #a3ea2a;
+  border-radius: 8px;
+  color: #dfe6ef;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.thmru-img-card .thmru-ic-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #a3ea2a;
+  margin-bottom: 6px;
+}
+.thmru-img-card .thmru-ic-head button {
+  background: none;
+  border: 0;
+  color: #9aa7bd;
+  font: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+  padding: 0 2px;
+}
+.thmru-img-card .thmru-ic-head button:first-of-type {
+  margin-left: auto;
+}
+.thmru-img-card .thmru-ic-head button:hover {
+  color: #e6edf3;
+}
+.thmru-img-card .thmru-ic-sum {
+  color: #c9d3e0;
+}
+.thmru-img-card .thmru-ic-rows {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: minmax(90px, max-content) minmax(0, 1fr);
+  gap: 4px 18px;
+}
+.thmru-img-card .thmru-ic-en {
+  color: #8f9db3;
+  font-size: 13px;
+  word-break: break-word;
+}
+.thmru-img-card .thmru-ic-ru {
+  word-break: break-word;
+}
+.thmru-img-card .thmru-ic-code {
+  grid-column: 1 / -1;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 12.5px;
+  color: #b8c4d6;
+  background: #131a29;
+  border-radius: 4px;
+  padding: 2px 6px;
+  word-break: break-all;
+}
+.thmru-img-card.thmru-collapsed .thmru-ic-rows {
+  display: none;
+}
+.thmru-img-card .thmru-ic-load {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9aa7bd;
+}
+.thmru-img-card .thmru-ic-err {
+  color: #ff8a8a;
+}
+.thmru-spin {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #a3ea2a;
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: thmru-rot 0.7s linear infinite;
+}
+@keyframes thmru-rot {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Языки справа налево: команды и код внутри перевода остаются слева направо. */
+.thmru-tr[dir="rtl"] code, .thmru-tr[dir="rtl"] pre, .thmru-tr[dir="rtl"] kbd { direction: ltr; unicode-bidi: isolate; }
